@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../resources/layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">融宝 openApi</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">快捷</a></li>
+            <li class="layui-nav-item"><a href="">代扣</a></li>
+            <li class="layui-nav-item"><a href="">鉴权</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它产品</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">产品1</a></dd>
+                    <dd><a href="">产品2</a></dd>
+                    <dd><a href="">产品3</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    py大神
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">惊不惊喜</a></dd>
+                    <dd><a href="">刺不刺激</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">分组1</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">cashier1</a></dd>
+                        <dd><a href="javascript:;">dk1</a></dd>
+                        <dd><a href="javascript:;">identify1</a></dd>
+                        <dd><a href="">other1</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>  
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;" id="api-main">
+            <!--内容主体区域 body-->
+            <div class="layui-collapse" lay-accordion>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">接口名称</h2>
+                    <div class="layui-colla-content layui-show">内容区域</div>
+                </div>
+            </div>
+            <!--内容主体区域end-->
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="../resources/layui/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'layer','form','jquery'], function(){
+        var element = layui.element
+            ,layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var windowWidth    = $(document.body).outerWidth(true);
+        var windowHeight   = $(window).height();
+        var contentHeight = windowHeight-$('.layui-header').outerHeight(true);
+        $("#api-main").height(contentHeight-$('.site-content-header').outerHeight(true));
+        $(".site-tree").height(contentHeight);
+
+
+        $(".layui-nav-tree").find("a").on("click",function(){
+            var hs = $(this)
+            if (hs) {
+                $(".layui-nav-tree").find("a").removeClass("active");
+                hs.addClass("active");
+                // var title = hs.find("cite").text();
+                // $("#content-title").html(title);
+                $("#api-main").load("http://localhost:63342/openApi/html/behind/add.html?_ijt=bklc9fv1lqeepa00ob3lbrarro");
+                // $("#api-main").load("/apidoc/"+hs.attr("data-type")+"?id="+hs.attr("data-id"));
+                // $("#api-main").load("www.baidu.com");
+            }else{
+
+            }
+        })
+
+        $("#taggle").on("click",function(){
+            var dis = $(".site-tree").css('display');
+            if (dis=="none") {
+                var treeWidth = $('.site-tree').outerWidth(true)
+                $(".site-content").width(windowWidth-treeWidth);
+                $(".site-tree").show();
+            }else{
+                $(".site-tree").hide();
+                $(".site-content").width(windowWidth);
+            }
+        })
+
+        // form.on('select(groups)', function(data){
+        //     window.location.href="/apidoc/index?id="+data.value;
+        // });
+        form.render();
+    });
+</script>
+</body>
+</html>

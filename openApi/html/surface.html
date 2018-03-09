@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>融宝 接口平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="../resources/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="../resources/layui/static/css/apidoc.css?t=2018-03-08%2009%3a53%3a53.176615173%20%2b0800%20CST" media="all">
+    <link rel="stylesheet" href="../resources/layui/static/css/font-awesome.min.css" media="all">
+</head>
+<body style="overflow-x:hidden">
+
+<div class="layui-header">
+    <div style="float: left;background: #393D49;width:20%;height: 60px;line-height: 60px;">
+        <a class="" href="/" style="margin-left: 20px;">
+            <img src="../resources/layui/static/img/logo.png" alt="ppgo_admin" style="width: 100px;">
+        </a>
+    </div>
+    <div style="float: right;width: 80%;">
+        <ul class="layui-nav" >
+            <li class="layui-nav-item layui-this">
+                <a href="###">文档</a>
+            </li>
+            <li class="layui-nav-item ">
+                <a href="/home">后台</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+
+<div class="layui-main layui-row" style="width: 100%;">
+    <div class="site-tree layui-col-md2 layui-hide-xs">
+        <div class="layui-form" style="height: 38px; margin: 10px 13px 0 0;padding-left: 10px;margin-bottom: 20px;">
+            <!--搜索框start-->
+            <select lay-filter="groups" lay-search>
+
+                <option value="2" >大商户</option>
+
+                <option value="1"  selected >供应商</option>
+
+            </select>
+            <!--搜索框end-->
+        </div>
+        <ul class="layui-tree">
+            <li><h2>基础说明</h2></li>
+            <ul>
+
+                <li class="site-tree-noicon">
+                    <a href="###" data-type="boss" data-name="introduce" data-id="">
+                        <cite>平台接口简介</cite>
+                    </a>
+                </li>
+
+                <li class="site-tree-noicon">
+                    <a href="###" data-type="boss" data-name="instructions" data-id="">
+                        <cite>接入须知</cite>
+                    </a>
+                </li>
+
+                <li class="site-tree-noicon">
+                    <a href="###" data-type="public" data-id="3">
+                        <cite>回调说明</cite>
+                    </a>
+                </li>
+
+                <li class="site-tree-noicon">
+                    <a href="###" data-type="env" data-id="1">
+                        <cite>环境说明</cite>
+                    </a>
+                </li>
+
+                <li class="site-tree-noicon">
+                    <a href="###" data-type="code" data-id="1">
+                        <cite>状态码说明</cite>
+                    </a>
+                </li>
+            </ul>
+
+
+            <li><h2>快捷</h2></li>
+
+            <li class="site-tree-noicon">
+                <a href="###" data-type="boss" data-name="module" data-id="1">
+                    <cite>储蓄卡签约</cite>
+                    <em></em>
+                </a>
+            </li>
+
+            <li class="site-tree-noicon">
+                <a href="###" data-type="boss" data-name="module" data-id="2">
+                    <cite>信用卡签约</cite>
+                    <em></em>
+                </a>
+            </li>
+
+
+
+
+            <li><h2>评价</h2></li>
+
+            <li class="site-tree-noicon">
+                <a href="###" data-type="apidetail" data-id="6">
+                    <cite>删除评价接口</cite>
+                    <em></em>
+                </a>
+            </li>
+
+
+
+        </ul>
+        <div style="clear:both"></div>
+        <div class="copyrights">power by rb_admin</div>
+    </div>
+
+    <div class="site-content layui-col-md10">
+        <div class="site-content-header"><i class="fa fa-bars" aria-hidden="true" id="taggle"></i>&nbsp;&nbsp;<span id="content-title">欢迎使用RB-apiAdmin</span> </div>
+        <!--页面类容信息-->
+        <div id="api-main">
+            <div style="width: 200px;height: 50px;margin: 200px auto;">
+                <img src="../resources/layui/static/img/logo_white.png" alt="">
+            </div>
+        </div>
+        <!--页面类容信息end-->
+    </div>
+</div>
+
+
+<script src="../resources/layui/layui.js"></script>
+
+<script>
+    layui.use(['element', 'layer','form','jquery'], function(){
+        var element = layui.element
+            ,layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var windowWidth    = $(document.body).outerWidth(true);
+        var windowHeight   = $(window).height();
+        var contentHeight = windowHeight-$('.layui-header').outerHeight(true);
+        $("#api-main").height(contentHeight-$('.site-content-header').outerHeight(true));
+        $(".site-tree").height(contentHeight);
+
+
+        $(".layui-tree").find("li a").on("click",function(){
+            var hs = $(this)
+            if (hs) {
+                $(".layui-tree").find("a").removeClass("active");
+                hs.addClass("active");
+                var title = hs.find("cite").text();
+                $("#content-title").html(title);
+                $("#api-main").load(hs.attr("data-type")+"/"+hs.attr("data-name")+hs.attr("data-id")+".html");
+                // $("#api-main").load("/apidoc/"+hs.attr("data-type")+"?id="+hs.attr("data-id"));
+                // $("#api-main").load("www.baidu.com");
+            }else{
+
+            }
+        })
+
+        $("#taggle").on("click",function(){
+            var dis = $(".site-tree").css('display');
+            if (dis=="none") {
+                var treeWidth = $('.site-tree').outerWidth(true)
+                $(".site-content").width(windowWidth-treeWidth);
+                $(".site-tree").show();
+            }else{
+                $(".site-tree").hide();
+                $(".site-content").width(windowWidth);
+            }
+        })
+
+        // form.on('select(groups)', function(data){
+        //     window.location.href="/apidoc/index?id="+data.value;
+        // });
+        form.render();
+    });
+</script>
+</body>
+</html>
